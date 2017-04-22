@@ -1,1 +1,38 @@
-{     "devDependencies": {         "electron-lite": "kaizhu256/node-electron-lite#alpha",         "utility2": "kaizhu256/node-utility2#alpha"     },     "name":"npmdoc-url-download",     "homepage": "https://github.com/npmdoc/node-npmdoc-url-download",     "repository": {         "type": "git",         "url": "https://github.com/npmdoc/node-npmdoc-url-download.git"     },     "scripts": {         "build-ci": "utility2 shReadmeTest build_ci.sh"     },     "version": "0.0.1" }
+{
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "description": "#### api documentation for  [url-download (v0.0.8)](http://miniflycn.github.io/url-download)  [![npm package](https://img.shields.io/npm/v/npmdoc-url-download.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-url-download) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-url-download.svg)](https://travis-ci.org/npmdoc/node-npmdoc-url-download)",
+    "devDependencies": {
+        "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "utility2": "kaizhu256/node-utility2#alpha"
+    },
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-url-download",
+    "keywords": [
+        "documentation",
+        "url-download"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_url_download.js",
+    "name": "npmdoc-url-download",
+    "nameAlias": "npmdoc_url_download",
+    "nameOriginal": "npmdoc-url-download",
+    "os": [
+        "darwin",
+        "linux"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/npmdoc/node-npmdoc-url-download.git"
+    },
+    "scripts": {
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "npm install \"kaizhu256/node-utility2#alpha\" && utility2 shDeployHeroku",
+        "postinstall": "[ ! -f npm_scripts.sh ] || ./npm_scripts.sh postinstall",
+        "start": "PORT=${PORT:-8080} utility2 start test.js",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
+    },
+    "version": "0.0.1"
+}
