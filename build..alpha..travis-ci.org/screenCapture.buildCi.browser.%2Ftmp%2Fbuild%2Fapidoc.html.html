@@ -1,0 +1,144 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="http://miniflycn.github.io/url-download">url-download (v0.0.8)</a>
+</h1>
+<h4>Download files from web</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.url-download">module url-download</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.url-download.url-download">
+            function <span class="apidocSignatureSpan"></span>url-download
+            <span class="apidocSignatureSpan">(url, dest, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">url-download.</span>version</span>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.url-download" id="apidoc.module.url-download">module url-download</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.url-download.url-download" id="apidoc.element.url-download.url-download">
+        function <span class="apidocSignatureSpan"></span>url-download
+        <span class="apidocSignatureSpan">(url, dest, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">url-download = function (url, dest, opts) {
+  url = Array.isArray(url) ? url : [url];
+  // allow for customization of output file name
+  if (opts &amp;&amp; opts.outputName) {
+    if (url.length !== 1) {
+      throw new Error("'outputName' only supported for single file download");
+    }
+  }
+
+  var emitter = new EventEmitter();
+  eachAsync(url, function (url, i, done) {
+    // allow for customization of output file name
+    var baseName = path.basename(url);
+    if (opts &amp;&amp; opts.outputName) {
+      baseName = opts.outputName;
+    }
+    var file = path.join(dest, baseName)
+      , stream;
+    valid(url).on('data', function (err, chunk) {
+      if (err) emitter.emit('error', err);
+      stream.write(chunk);
+    }).on('check', function (err, valid) {
+      if (err) return emitter.emit('error', err)
+      if (!valid) {
+          err = new Error(url + ' is invalid');
+          err.url = url;
+          return emitter.emit('invalid', err);
+      }
+      stream = fs.createWriteStream(file);
+    }).on('end', function () {
+      stream.on('close', function () {
+        emitter.emit('close', null, url, file);
+        done();
+      });
+      stream.end();
+    }).on('error', function (err) {
+        emitter.emit('error', err);
+    });
+  }, function () {
+    emitter.emit('done');
+  });
+  return emitter;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
